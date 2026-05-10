@@ -1,0 +1,54 @@
+{
+  "entities": {
+    "CommunityTool": {
+      "title": "Community Tool",
+      "description": "A mini utility or project submitted by the community.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the tool" },
+        "tagline": { "type": "string", "description": "Short catchy tagline" },
+        "description": { "type": "string", "description": "Detailed description" },
+        "url": { "type": "string", "description": "URL to the tool" },
+        "githubUrl": { "type": "string", "description": "Optional Github link" },
+        "icon": { "type": "string", "description": "Lucide icon name" },
+        "category": { "type": "string", "enum": ["PRODUCTIVITY", "CREATOR", "SHARING", "FINANCE", "AI", "EXPERIMENTAL", "FUN", "DEVELOPER", "STUDY"] },
+        "creatorId": { "type": "string", "description": "UID of the creator" },
+        "creatorName": { "type": "string", "description": "Display name of the creator" },
+        "upvotes": { "type": "number", "description": "Number of upvotes" },
+        "stickers": { "type": "array", "description": "Sticker labels like NEW, HOT, etc." },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "featured": { "type": "boolean", "description": "Whether it is a featured tool" }
+      },
+      "required": ["name", "tagline", "url", "category", "creatorId", "creatorName"]
+    },
+    "Creator": {
+      "title": "Creator Profile",
+      "description": "Information about a tool creator.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "bio": { "type": "string" },
+        "avatar": { "type": "string" },
+        "github": { "type": "string" },
+        "twitter": { "type": "string" },
+        "website": { "type": "string" },
+        "totalLikes": { "type": "number" },
+        "badge": { "type": "string", "description": "Custom rank/badge" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name"]
+    }
+  },
+  "firestore": {
+    "community_tools": {
+      "schema": { "$ref": "CommunityTool" },
+      "description": "Public community tools"
+    },
+    "creators": {
+      "schema": { "$ref": "Creator" },
+      "description": "Creator profiles indexed by UID"
+    }
+  }
+}
