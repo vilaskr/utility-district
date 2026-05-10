@@ -44,10 +44,23 @@ export default function Navbar() {
 function NavLink({ icon, label, href, active }: { icon: React.ReactNode, label: string, href: string, active?: boolean }) {
   const isHash = href.startsWith('/#');
   
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isHash && window.location.pathname === '/') {
+      e.preventDefault();
+      const id = href.replace('/#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', `/#${id}`);
+      }
+    }
+  };
+  
   if (isHash) {
     return (
       <a 
         href={href} 
+        onClick={handleScroll}
         className={`flex items-center gap-2 font-bold transition-colors group ${active ? 'text-retro-blue' : 'hover:text-retro-blue'}`}
       >
         <span className="group-hover:translate-y-[-2px] transition-transform">{icon}</span>

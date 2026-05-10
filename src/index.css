@@ -14,6 +14,10 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-retro-beige text-retro-black font-sans selection:bg-retro-black selection:text-retro-beige;
     cursor: none;

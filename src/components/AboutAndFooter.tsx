@@ -34,10 +34,13 @@ export function About() {
   );
 }
 
-function SocialBtn({ icon, href = "#", label }: { icon: React.ReactNode, href?: string, label: string }) {
+function SocialBtn({ icon, href, label }: { icon: React.ReactNode, href?: string, label: string }) {
   return (
     <a 
-      href={href}
+      href={href || undefined}
+      onClick={(e) => {
+        if (!href || href === '#') e.preventDefault();
+      }}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
