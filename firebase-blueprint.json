@@ -46,6 +46,16 @@
       "schema": { "$ref": "CommunityTool" },
       "description": "Public community tools"
     },
+    "community_tools/{toolId}/user_upvotes": {
+      "schema": {
+        "type": "object",
+        "properties": {
+          "userId": { "type": "string" },
+          "createdAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "description": "Log of users who upvoted a specific tool"
+    },
     "creators": {
       "schema": { "$ref": "Creator" },
       "description": "Creator profiles indexed by UID"

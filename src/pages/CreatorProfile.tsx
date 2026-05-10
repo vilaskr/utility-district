@@ -1,13 +1,16 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
-import { db } from '../lib/firebase';
+import { db, auth } from '../lib/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { CommunityTool, CreatorProfile as CreatorType } from '../types/community';
 import { motion } from 'motion/react';
-import { Github, Twitter, Globe, Heart, Package, Calendar } from 'lucide-react';
+import { Github, Twitter, Globe, Heart, Package } from 'lucide-react';
+import CommunityToolCard from '../components/CommunityToolCard';
 
 export default function CreatorProfile() {
   const { id } = useParams<{ id: string }>();
+  const [user] = useAuthState(auth);
   const [profile, setProfile] = useState<CreatorType | null>(null);
   const [tools, setTools] = useState<CommunityTool[]>([]);
   const [loading, setLoading] = useState(true);
@@ -97,35 +100,12 @@ export default function CreatorProfile() {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {tools.map((tool, idx) => (
-            <motion.div 
-              key={tool.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
-              className="retro-card bg-white p-6 hover:-translate-y-1 transition-transform"
-            >
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="text-xl font-black uppercase">{tool.name}</h3>
-                <span className="text-[10px] font-black uppercase tracking-tighter px-2 py-1 bg-retro-blue text-white border-2 border-retro-black">
-                  {tool.category}
-                </span>
-              </div>
-              <p className="text-sm text-retro-black/70 mb-6 line-clamp-2">{tool.description}</p>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs font-black">
-                  <Heart size={14} className="text-retro-red fill-retro-red" />
-                  {tool.upvotes}
-                </div>
-                <a 
-                  href={tool.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="retro-button py-2 px-4 shadow-[4px_4px_0_0_rgba(17,17,17,1)]"
-                >
-                  OPEN
-                </a>
-              </div>
-            </motion.div>
+            <CommunityToolCard 
+              key={tool.id} 
+              tool={tool} 
+              index={idx} 
+              userId={user?.uid} 
+            />
           ))}
           
           {tools.length === 0 && (

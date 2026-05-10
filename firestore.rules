@@ -23,19 +23,34 @@ service cloud.firestore {
                data.category in ['PRODUCTIVITY', 'CREATOR', 'SHARING', 'FINANCE', 'AI', 'EXPERIMENTAL', 'FUN', 'DEVELOPER', 'STUDY'];
       }
 
-      allow list, get: if true; // Publicly readable
+      allow list, get: if true;
       
       allow create: if isSignedIn() && isValidTool(request.resource.data) &&
                       request.resource.data.upvotes == 0;
       
       allow update: if isSignedIn() && (
-        // Allow upvoting
-        (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['upvotes'])) ||
-        // Allow owner to update metadata
+        // Action: Upvote
+        (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['upvotes']) && 
+         request.resource.data.upvotes == resource.data.upvotes + 1 &&
+         existsAfter(/databases/$(database)/documents/community_tools/$(toolId)/user_upvotes/$(request.auth.uid))) ||
+        
+        // Action: Remove Upvote
+        (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['upvotes']) && 
+         request.resource.data.upvotes == resource.data.upvotes - 1 &&
+         !existsAfter(/databases/$(database)/documents/community_tools/$(toolId)/user_upvotes/$(request.auth.uid))) ||
+
+        // Action: Edit Metadata (Owner only)
         (isOwner(resource.data.creatorId) && isValidTool(request.resource.data))
       );
       
       allow delete: if isOwner(resource.data.creatorId);
+
+      // Subcollection: Upvoted Users
+      match /user_upvotes/{userId} {
+        allow get: if isSignedIn();
+        allow create: if isOwner(userId);
+        allow delete: if isOwner(userId);
+      }
     }
 
     // Creator Profiles

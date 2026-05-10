@@ -55,6 +55,17 @@ export const APPS: AppUtility[] = [
     color: 'bg-retro-yellow',
     stickers: ['POPULAR','HANDY']
   },
+  {
+    id: 'minitrip',
+    name: 'MINI TRIP PLANNER',
+    tagline: "Plan or Die",
+    description: "Plan your trip now instead of saying 'We will plan'",
+    icon: 'Plane',
+    category: 'PLANNER',
+    url: 'https://minitrip-planner.vercel.app/',
+    color: 'bg-retro-yellow',
+    stickers: ['BETA - STILL DEVELOPING']
+  }
 ];
 
 export const SOCIALS = {

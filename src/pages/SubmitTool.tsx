@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -35,8 +35,9 @@ export default function SubmitTool() {
     setSubmitting(true);
     setError(null);
 
+    const path = 'community_tools';
     try {
-      await addDoc(collection(db, 'community_tools'), {
+      await addDoc(collection(db, path), {
         ...formData,
         creatorId: user.uid,
         creatorName: user.displayName || 'Anonymous Creator',
@@ -49,9 +50,36 @@ export default function SubmitTool() {
       
       setSuccess(true);
       setTimeout(() => navigate('/community'), 2000);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Submission error:", err);
-      setError("Failed to publish your tool. Please try again.");
+      
+      let userMessage = "UNEXPECTED SYSTEM ERROR. PLEASE TRY AGAIN LATER.";
+      
+      if (err.code === 'permission-denied') {
+        userMessage = "PROTOCOL VIOLATION: SUBMISSION REJECTED BY DISTRICT SECURITY RULES.";
+      } else if (err.code === 'unavailable') {
+        userMessage = "CONNECTION LOST: THE DISTRICT SERVER IS CURRENTLY UNREACHABLE.";
+      } else if (err.code === 'unauthenticated') {
+        userMessage = "SESSION EXPIRED: PLEASE RE-AUTHENTICATE YOUR CREATOR NODE.";
+      } else if (err.message?.includes('network')) {
+        userMessage = "NETWORK INSTABILITY DETECTED. CHECK YOUR CONNECTION UP-LINK.";
+      }
+
+      setError(userMessage);
+
+      // Diagnostic logging as per Firebase integration guidelines
+      const errInfo = {
+        error: err instanceof Error ? err.message : String(err),
+        errorCode: err.code,
+        operationType: 'create',
+        path,
+        authInfo: {
+          userId: auth.currentUser?.uid,
+          email: auth.currentUser?.email,
+          emailVerified: auth.currentUser?.emailVerified,
+        }
+      };
+      console.error('Firestore Diagnostic Info: ', JSON.stringify(errInfo));
     } finally {
       setSubmitting(false);
     }
@@ -211,9 +239,18 @@ export default function SubmitTool() {
         </div>
 
         {error && (
-          <div className="p-4 bg-retro-red/10 border-2 border-retro-red text-retro-red text-xs font-black uppercase">
-            {error}
-          </div>
+          <motion.div 
+            initial={{ x: -10, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            className="p-4 bg-retro-red/10 border-4 border-retro-black shadow-[4px_4px_0_0_#111] flex items-center gap-4 text-retro-red"
+          >
+            <div className="w-10 h-10 bg-retro-red border-2 border-retro-black flex items-center justify-center text-white shrink-0">
+              <AlertCircle size={20} />
+            </div>
+            <span className="text-[10px] font-black uppercase tracking-widest leading-tight">
+              {error}
+            </span>
+          </motion.div>
         )}
 
         <button 
