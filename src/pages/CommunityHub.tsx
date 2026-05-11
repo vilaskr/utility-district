@@ -21,6 +21,10 @@ export default function CommunityHub() {
 
   useEffect(() => {
     async function fetchTools() {
+      if (!db) {
+        setLoading(false);
+        return;
+      }
       try {
         const q = query(collection(db, 'community_tools'), orderBy('createdAt', 'desc'), limit(50));
         const snapshot = await getDocs(q);
@@ -157,7 +161,7 @@ const FeaturedCard: React.FC<{ tool: CommunityTool, index: number, userId?: stri
 
   useEffect(() => {
     async function checkUpvote() {
-      if (!userId) {
+      if (!userId || !db) {
         setUpvoted(false);
         return;
       }
@@ -176,7 +180,7 @@ const FeaturedCard: React.FC<{ tool: CommunityTool, index: number, userId?: stri
       signInWithGoogle();
       return;
     }
-    if (loadingAction) return;
+    if (loadingAction || !db) return;
 
     setLoadingAction(true);
     const newUpvoted = !upvoted;

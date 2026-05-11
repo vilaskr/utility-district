@@ -17,7 +17,10 @@ export default function CreatorProfile() {
 
   useEffect(() => {
     async function fetchCreatorData() {
-      if (!id) return;
+      if (!id || !db) {
+        setLoading(false);
+        return;
+      }
       try {
         // Fetch creator info (for now we might not have a full profile doc, so we'll defaults)
         const creatorDoc = await getDoc(doc(db, 'creators', id));

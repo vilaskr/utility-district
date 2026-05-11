@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import Navbar from './components/Navbar';
 import { Footer } from './components/AboutAndFooter';
 import RetroLoader from './components/RetroLoader';
-import { Monitor, MousePointer2 } from 'lucide-react';
+import { Monitor, MousePointer2, AlertTriangle } from 'lucide-react';
+import { isConfigured } from './lib/firebase';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -46,6 +47,17 @@ export default function App() {
             <RetroLoader onComplete={() => setLoading(false)} />
           )}
         </AnimatePresence>
+
+        {/* Configuration Warning Banner */}
+        {!isConfigured && (
+          <div className="fixed top-0 left-0 right-0 z-[100] bg-retro-red text-white py-3 px-6 flex items-center justify-center gap-4 border-b-4 border-retro-black shadow-lg">
+            <AlertTriangle className="animate-bounce" />
+            <div className="text-center">
+              <p className="font-black uppercase tracking-tight text-sm">Firebase Setup Required</p>
+              <p className="text-[10px] font-bold opacity-90 uppercase">Please add your VITE_FIREBASE_* keys in the Settings menu to enable community features.</p>
+            </div>
+          </div>
+        )}
 
         {/* Retro Global Cursor */}
         <div 

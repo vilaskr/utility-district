@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { useNavigate } from 'react-router-dom';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db, auth, signInWithGoogle } from '../lib/firebase';
+import { db, auth, signInWithGoogle, isConfigured } from '../lib/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { ToolCategory } from '../types/community';
-import { Rocket, Link as LinkIcon, Github, Type, FileText, Layout, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Rocket, Link as LinkIcon, Github, Type, FileText, Layout, CheckCircle2, AlertCircle, Settings } from 'lucide-react';
 
 export default function SubmitTool() {
-  const [user, loadingAuth] = useAuthState(auth);
+  const [user, loadingAuth] = useAuthState(auth || undefined);
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,7 +30,7 @@ export default function SubmitTool() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
+    if (!user || !db) return;
 
     setSubmitting(true);
     setError(null);
@@ -74,9 +74,9 @@ export default function SubmitTool() {
         operationType: 'create',
         path,
         authInfo: {
-          userId: auth.currentUser?.uid,
-          email: auth.currentUser?.email,
-          emailVerified: auth.currentUser?.emailVerified,
+          userId: user?.uid,
+          email: user?.email,
+          emailVerified: user?.emailVerified,
         }
       };
       console.error('Firestore Diagnostic Info: ', JSON.stringify(errInfo));
@@ -84,6 +84,23 @@ export default function SubmitTool() {
       setSubmitting(false);
     }
   };
+
+  if (!isConfigured) {
+    return (
+      <div className="pt-40 pb-20 px-6 max-w-2xl mx-auto text-center">
+        <div className="retro-card bg-white p-12 border-dashed">
+          <div className="w-20 h-20 bg-retro-red border-4 border-retro-black flex items-center justify-center mx-auto mb-8 rotate-3 shadow-[8px_8px_0_0_#111]">
+             <Settings size={40} className="text-white" />
+          </div>
+          <h2 className="text-3xl font-black uppercase mb-4">SETUP REQUIRED</h2>
+          <p className="text-retro-black/60 mb-8 font-bold">
+            THE DISTRICT INFRASTRUCTURE IS OFFLINE. <br/>
+            PLEASE ADD YOUR FIREBASE KEYS IN THE SETTINGS MENU TO ACTIVATE THE CREATOR PORTAL.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (loadingAuth) return <div className="pt-40 text-center font-black">VALIDATING NODE...</div>;
 

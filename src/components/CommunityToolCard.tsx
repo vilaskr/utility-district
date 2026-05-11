@@ -19,7 +19,7 @@ const CommunityToolCard: React.FC<CommunityToolCardProps> = ({ tool, index, user
 
   useEffect(() => {
     async function checkUpvote() {
-      if (!userId) {
+      if (!userId || !db) {
         setUpvoted(false);
         return;
       }
@@ -38,7 +38,7 @@ const CommunityToolCard: React.FC<CommunityToolCardProps> = ({ tool, index, user
       signInWithGoogle();
       return;
     }
-    if (loadingAction) return;
+    if (loadingAction || !db) return;
 
     setLoadingAction(true);
     const newUpvoted = !upvoted;
