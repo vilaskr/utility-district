@@ -3,53 +3,24 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
 // Use environment variables (prefixed with VITE_ for client-side)
+const getEnv = (key: string) => import.meta.env[key] || import.meta.env[`VITE_${key}`] || import.meta.env[`VITE_FIREBASE_${key}`] || "";
+
 const firebaseConfig = {
-  apiKey: 
-    import.meta.env.VITE_FIREBASE_API_KEY || 
-    import.meta.env.VITE_API_KEY || 
-    import.meta.env.VITE_apiKey ||
-    import.meta.env.VITE_APIKEY,
-  authDomain: 
-    import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 
-    import.meta.env.VITE_AUTH_DOMAIN || 
-    import.meta.env.VITE_authDomain ||
-    import.meta.env.VITE_AUTHDOMAIN,
-  projectId: 
-    import.meta.env.VITE_FIREBASE_PROJECT_ID || 
-    import.meta.env.VITE_PROJECT_ID || 
-    import.meta.env.VITE_projectId ||
-    import.meta.env.VITE_PROJECTID,
-  storageBucket: 
-    import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 
-    import.meta.env.VITE_STORAGE_BUCKET || 
-    import.meta.env.VITE_storageBucket ||
-    import.meta.env.VITE_STORAGEBUCKET,
-  messagingSenderId: 
-    import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || 
-    import.meta.env.VITE_MESSAGING_SENDER_ID || 
-    import.meta.env.VITE_messagingSenderId ||
-    import.meta.env.VITE_MESSAGINGSENDERID,
-  appId: 
-    import.meta.env.VITE_FIREBASE_APP_ID || 
-    import.meta.env.VITE_APP_ID || 
-    import.meta.env.VITE_appId ||
-    import.meta.env.VITE_APPID,
-  measurementId: 
-    import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || 
-    import.meta.env.VITE_MEASUREMENT_ID || 
-    import.meta.env.VITE_measurementId ||
-    import.meta.env.VITE_MEASUREMENTID,
-  firestoreDatabaseId: 
-    import.meta.env.VITE_FIREBASE_FIRESTORE_DATABASE_ID || 
-    import.meta.env.VITE_DATABASE_ID || 
-    import.meta.env.VITE_firestoreDatabaseId ||
-    import.meta.env.VITE_DATABASEID,
+  apiKey: getEnv('apiKey') || getEnv('API_KEY'),
+  authDomain: getEnv('authDomain') || getEnv('AUTH_DOMAIN'),
+  projectId: getEnv('projectId') || getEnv('PROJECT_ID'),
+  storageBucket: getEnv('storageBucket') || getEnv('STORAGE_BUCKET'),
+  messagingSenderId: getEnv('messagingSenderId') || getEnv('MESSAGING_SENDER_ID'),
+  appId: getEnv('appId') || getEnv('APP_ID'),
+  measurementId: getEnv('measurementId') || getEnv('MEASUREMENT_ID'),
+  firestoreDatabaseId: getEnv('firestoreDatabaseId') || getEnv('DATABASE_ID'),
 };
 
-const isConfigured = Boolean(firebaseConfig.apiKey && firebaseConfig.apiKey !== 'undefined');
+const isConfigured = Boolean(firebaseConfig.apiKey && firebaseConfig.apiKey !== 'undefined' && firebaseConfig.apiKey !== '');
 
-if (import.meta.env.DEV) {
-  console.log("Firebase Configuration Status:", isConfigured ? "CONNECTED" : "NOT CONFIGURED");
+// Debug log for production/dev verification
+if (typeof window !== 'undefined') {
+  console.log("%c[FIREBASE STATUS]", "color: #ffde00; background: #111; font-weight: bold; padding: 2px 4px;", isConfigured ? "CONNECTED" : "NOT CONFIGURED");
 }
 
 // Initialize Firebase only if the API key is present
