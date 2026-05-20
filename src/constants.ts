@@ -62,9 +62,9 @@ export const APPS: AppUtility[] = [
     description: "Plan your trip now instead of saying 'We will plan'",
     icon: 'Plane',
     category: 'PLANNER',
-    url: 'https://minitrip-planner.vercel.app/',
+    url: 'https://minitrip.vercel.app/',
     color: 'bg-retro-yellow',
-    stickers: ['BETA - STILL DEVELOPING']
+    stickers: ['BETA']
   }
 ];
 

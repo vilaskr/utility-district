@@ -7,6 +7,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { ToolCategory } from '../types/community';
 import { Rocket, Link as LinkIcon, Github, Type, FileText, Layout, CheckCircle2, AlertCircle, Settings } from 'lucide-react';
 
+import SEO from '../components/SEO';
+
 export default function SubmitTool() {
   const [user, loadingAuth] = useAuthState(auth || undefined);
   const navigate = useNavigate();
@@ -144,6 +146,11 @@ export default function SubmitTool() {
 
   return (
     <div className="pt-40 pb-20 px-6 max-w-3xl mx-auto">
+      <SEO 
+        title="Submit Tool" 
+        description="Publish your own utility to the District. Showcase your independent digital tools and reach a community of minimalist tech enthusiasts."
+        keywords="submit utility, publish tool, creator portal, developer sharing, indie tools"
+      />
       <div className="mb-12">
         <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight mb-2">Publish your Utility</h1>
         <p className="text-retro-black/60 font-bold uppercase tracking-widest text-xs">The Digital Frontier awaits your contribution.</p>

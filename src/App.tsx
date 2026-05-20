@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import Navbar from './components/Navbar';
 import { Footer } from './components/AboutAndFooter';
@@ -41,6 +41,7 @@ export default function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div className="relative min-h-screen cursor-none">
         <AnimatePresence>
           {loading && (
@@ -131,4 +132,33 @@ function Sticker({ text, top, left, right, rotate, color, textLight }: {
       {text}
     </motion.div>
   );
+}
+
+function ScrollToTop() {
+  const { pathname, hash, key } = useLocation();
+
+  useEffect(() => {
+    // If there's a hash, we want to scroll to that element
+    if (hash) {
+      const id = hash.replace('#', '');
+      const element = document.getElementById(id);
+      if (element) {
+        // Small delay to ensure the page has rendered
+        const timer = setTimeout(() => {
+          const navHeight = 100; // Offset for the floating navbar
+          const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({
+            top: elementPosition - navHeight,
+            behavior: 'smooth'
+          });
+        }, 100);
+        return () => clearTimeout(timer);
+      }
+    } else {
+      // If no hash, always scroll to the very top immediately on route change
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash, key]); // Use key to trigger on every navigation even to same path
+
+  return null;
 }

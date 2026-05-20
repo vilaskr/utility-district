@@ -42,36 +42,31 @@ export default function Navbar() {
 }
 
 function NavLink({ icon, label, href, active }: { icon: React.ReactNode, label: string, href: string, active?: boolean }) {
-  const isHash = href.startsWith('/#');
+  const isHash = href.includes('#');
   
-  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (isHash && window.location.pathname === '/') {
-      e.preventDefault();
-      const id = href.replace('/#', '');
+  const handleClick = (e: React.MouseEvent) => {
+    // If it's a hash link on the same page, we might want to ensure it scrolls
+    if (isHash && window.location.pathname === href.split('#')[0]) {
+      const id = href.split('#')[1];
       const element = document.getElementById(id);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-        window.history.pushState(null, '', `/#${id}`);
+        e.preventDefault();
+        const navHeight = 100;
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: elementPosition - navHeight,
+          behavior: 'smooth'
+        });
+        // Update URL hash without reload
+        window.history.pushState(null, '', href);
       }
     }
   };
-  
-  if (isHash) {
-    return (
-      <a 
-        href={href} 
-        onClick={handleScroll}
-        className={`flex items-center gap-2 font-bold transition-colors group ${active ? 'text-retro-blue' : 'hover:text-retro-blue'}`}
-      >
-        <span className="group-hover:translate-y-[-2px] transition-transform">{icon}</span>
-        <span className="hidden lg:block uppercase text-[10px] font-black tracking-widest">{label}</span>
-      </a>
-    );
-  }
 
   return (
     <Link 
       to={href} 
+      onClick={handleClick}
       className={`flex items-center gap-2 font-bold transition-colors group ${active ? 'text-retro-blue' : 'hover:text-retro-blue'}`}
     >
       <span className="group-hover:translate-y-[-2px] transition-transform">{icon}</span>

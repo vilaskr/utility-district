@@ -8,6 +8,8 @@ import { motion } from 'motion/react';
 import { Github, Twitter, Globe, Heart, Package } from 'lucide-react';
 import CommunityToolCard from '../components/CommunityToolCard';
 
+import SEO from '../components/SEO';
+
 export default function CreatorProfile() {
   const { id } = useParams<{ id: string }>();
   const [user] = useAuthState(auth);
@@ -53,6 +55,11 @@ export default function CreatorProfile() {
 
   return (
     <div className="pt-32 pb-20 px-6 max-w-5xl mx-auto">
+      <SEO 
+        title={profile ? `${profile.name}'s Profile` : 'Creator Profile'} 
+        description={`Explore independent tools and utilities created by ${profile?.name || 'a member'} in the Utility District.`}
+        keywords="creator profile, indie developer, utility craftsman, digital workshop"
+      />
       {/* Header Profile Section */}
       <div className="retro-card bg-white p-8 md:p-12 mb-12 flex flex-col md:flex-row gap-8 items-center md:items-start text-center md:text-left">
         <div className="w-32 h-32 border-8 border-retro-black shadow-[8px_8px_0_0_rgba(17,17,17,1)] bg-retro-gray flex-shrink-0">

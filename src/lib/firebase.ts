@@ -28,7 +28,11 @@ const app = isConfigured
   ? (getApps().length > 0 ? getApp() : initializeApp(firebaseConfig))
   : null;
 
-export const db = app ? getFirestore(app, firebaseConfig.firestoreDatabaseId) : null;
+export const db = app 
+  ? (firebaseConfig.firestoreDatabaseId 
+      ? getFirestore(app, firebaseConfig.firestoreDatabaseId) 
+      : getFirestore(app)) 
+  : null;
 export const auth = app ? getAuth(app) : null;
 export const googleProvider = new GoogleAuthProvider();
 

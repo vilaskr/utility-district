@@ -8,6 +8,8 @@ import { Search, Plus, Sparkles, ChevronRight, Heart, Loader2 } from 'lucide-rea
 import { Link } from 'react-router-dom';
 import CommunityToolCard from '../components/CommunityToolCard';
 
+import SEO from '../components/SEO';
+
 export default function CommunityHub() {
   const [user] = useAuthState(auth);
   const [tools, setTools] = useState<CommunityTool[]>([]);
@@ -48,6 +50,11 @@ export default function CommunityHub() {
 
   return (
     <div className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
+      <SEO 
+        title="Community Hub" 
+        description="Discover utilities built by the community. Explore independent tools, open-source projects, and digital experiments from around the web."
+        keywords="community tools, indie developers, digital workshop, open source utilities, sharing"
+      />
       {/* Hero Section */}
       <section className="mb-16 text-center">
         <motion.div
