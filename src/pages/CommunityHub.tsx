@@ -4,14 +4,14 @@ import { collection, query, orderBy, getDocs, limit, doc, getDoc, writeBatch, in
 import { db, auth, signInWithGoogle } from '../lib/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { CommunityTool } from '../types/community';
-import { Search, Plus, Sparkles, ChevronRight, Heart, Loader2 } from 'lucide-react';
+import { Search, Plus, Sparkles, ChevronRight, Heart, Loader as Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CommunityToolCard from '../components/CommunityToolCard';
 
 import SEO from '../components/SEO';
 
 export default function CommunityHub() {
-  const [user] = useAuthState(auth);
+  const [user] = useAuthState(auth || undefined);
   const [tools, setTools] = useState<CommunityTool[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState<string>('ALL');

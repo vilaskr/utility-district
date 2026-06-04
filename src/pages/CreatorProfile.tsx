@@ -12,7 +12,7 @@ import SEO from '../components/SEO';
 
 export default function CreatorProfile() {
   const { id } = useParams<{ id: string }>();
-  const [user] = useAuthState(auth);
+  const [user] = useAuthState(auth || undefined);
   const [profile, setProfile] = useState<CreatorType | null>(null);
   const [tools, setTools] = useState<CommunityTool[]>([]);
   const [loading, setLoading] = useState(true);
