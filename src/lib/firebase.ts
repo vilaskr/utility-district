@@ -1,14 +1,26 @@
 import { initializeApp, getApp, getApps } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-import firebaseAppletConfig from '../../firebase-applet-config.json';
+
+// Safely load the firebase-applet-config.json file if it exists (using Vite's import.meta.glob to avoid build errors if the file is ignored/missing in git)
+let firebaseAppletConfig: any = {};
+try {
+  const configs = import.meta.glob('../../firebase-applet-config.json', { eager: true });
+  const configKeys = Object.keys(configs);
+  if (configKeys.length > 0) {
+    const mod = configs[configKeys[0]] as any;
+    firebaseAppletConfig = mod.default || mod;
+  }
+} catch (e) {
+  // Gracefully fall back to empty config if not found
+}
 
 // Use environment variables (prefixed with VITE_ for client-side) with config file as fallback
 const getEnv = (key: string) => 
   import.meta.env[key] || 
   import.meta.env[`VITE_${key}`] || 
   import.meta.env[`VITE_FIREBASE_${key}`] || 
-  (firebaseAppletConfig as any)[key] || 
+  firebaseAppletConfig[key] || 
   "";
 
 const firebaseConfig = {
