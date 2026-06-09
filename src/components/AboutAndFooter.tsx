@@ -1,6 +1,7 @@
 import React from 'react';
-import { Mail, Twitter, Github, Instagram } from 'lucide-react';
+import { Mail, Twitter, Github, Instagram, Activity, Eye } from 'lucide-react';
 import { SOCIALS } from '../constants';
+import { usePresence, useViewCount } from '../hooks/useFirebaseStats';
 
 export function About() {
   return (
@@ -52,10 +53,13 @@ function SocialBtn({ icon, href, label }: { icon: React.ReactNode, href?: string
 }
 
 export function Footer() {
+  const { activeUsers } = usePresence();
+  const { viewCount } = useViewCount();
+
   return (
     <footer className="py-12 px-6 bg-retro-black text-retro-beige border-t-8 border-retro-yellow">
       <div className="max-w-7xl mx-auto flex flex-col items-center">
-        <div className="w-full flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+        <div className="w-full flex flex-col md:flex-row justify-between items-center gap-8 mb-10">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-retro-beige rounded flex items-center justify-center">
               <span className="text-retro-black font-display font-bold text-2xl">U</span>
@@ -67,6 +71,30 @@ export function Footer() {
             <a href={SOCIALS.twitter} target="_blank" rel="noopener noreferrer" className="hover:text-retro-yellow transition-colors">Twitter</a>
             <a href={SOCIALS.github} target="_blank" rel="noopener noreferrer" className="hover:text-retro-yellow transition-colors">Github</a>
             <a href={SOCIALS.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-retro-yellow transition-colors">Instagram</a>
+          </div>
+        </div>
+
+        {/* Live Real-time Stats Panel */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 border-2 border-retro-yellow/20 bg-retro-black/40 p-5 rounded-lg mb-8 font-mono uppercase tracking-wider text-xs">
+          <div className="flex items-center gap-3 bg-[#1e1d1b] p-3 border border-retro-beige/10 rounded">
+            <div className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-retro-green opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-retro-green"></span>
+            </div>
+            <div>
+              <span className="opacity-60 text-[10px] block">LIVE RESIDENTS</span>
+              <span className="font-bold text-retro-green text-sm">{activeUsers} {activeUsers === 1 ? 'User' : 'Users'} Online Now</span>
+            </div>
+          </div>
+          
+          <div className="flex items-center gap-3 bg-[#1e1d1b] p-3 border border-retro-beige/10 rounded">
+            <Eye className="text-retro-yellow w-5 h-5 flex-shrink-0" />
+            <div>
+              <span className="opacity-60 text-[10px] block">TOTAL DISTRICT VISITS</span>
+              <span className="font-bold text-retro-yellow text-sm">
+                {viewCount !== null ? viewCount.toLocaleString() : 'Loading...'} Hits
+              </span>
+            </div>
           </div>
         </div>
         

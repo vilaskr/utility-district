@@ -1,9 +1,15 @@
 import { initializeApp, getApp, getApps } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import firebaseAppletConfig from '../../firebase-applet-config.json';
 
-// Use environment variables (prefixed with VITE_ for client-side)
-const getEnv = (key: string) => import.meta.env[key] || import.meta.env[`VITE_${key}`] || import.meta.env[`VITE_FIREBASE_${key}`] || "";
+// Use environment variables (prefixed with VITE_ for client-side) with config file as fallback
+const getEnv = (key: string) => 
+  import.meta.env[key] || 
+  import.meta.env[`VITE_${key}`] || 
+  import.meta.env[`VITE_FIREBASE_${key}`] || 
+  (firebaseAppletConfig as any)[key] || 
+  "";
 
 const firebaseConfig = {
   apiKey: getEnv('apiKey') || getEnv('API_KEY'),
@@ -13,7 +19,7 @@ const firebaseConfig = {
   messagingSenderId: getEnv('messagingSenderId') || getEnv('MESSAGING_SENDER_ID'),
   appId: getEnv('appId') || getEnv('APP_ID'),
   measurementId: getEnv('measurementId') || getEnv('MEASUREMENT_ID'),
-  firestoreDatabaseId: getEnv('firestoreDatabaseId') || getEnv('DATABASE_ID'),
+  firestoreDatabaseId: getEnv('firestoreDatabaseId') || getEnv('DATABASE_ID') || 'ai-studio-b2a9be90-6794-4881-8521-9f6e040d2b90',
 };
 
 const isConfigured = Boolean(firebaseConfig.apiKey && firebaseConfig.apiKey !== 'undefined' && firebaseConfig.apiKey !== '');
