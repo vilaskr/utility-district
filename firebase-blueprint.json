@@ -39,6 +39,24 @@
         "createdAt": { "type": "string", "format": "date-time" }
       },
       "required": ["uid", "name"]
+    },
+    "Presence": {
+      "title": "Presence Status",
+      "description": "Real-time presence status of an active user session.",
+      "type": "object",
+      "properties": {
+        "lastActive": { "type": "string", "format": "date-time" }
+      },
+      "required": ["lastActive"]
+    },
+    "ViewCount": {
+      "title": "View Count",
+      "description": "Global hit/visit counter.",
+      "type": "object",
+      "properties": {
+        "count": { "type": "number", "description": "The current view count" }
+      },
+      "required": ["count"]
     }
   },
   "firestore": {
@@ -59,6 +77,14 @@
     "creators": {
       "schema": { "$ref": "Creator" },
       "description": "Creator profiles indexed by UID"
+    },
+    "presence": {
+      "schema": { "$ref": "Presence" },
+      "description": "Active user session heartbeats"
+    },
+    "view_count": {
+      "schema": { "$ref": "ViewCount" },
+      "description": "App traffic counters"
     }
   }
 }
