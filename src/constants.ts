@@ -76,6 +76,17 @@ export const APPS: AppUtility[] = [
   url: 'https://human-library-three.vercel.app/',
   color: 'bg-retro-blue',
   stickers: ['NEW','BETA']
+},
+{
+  id: 'legacyvault',
+  name: 'LEGACY VAULT',
+  tagline: "Your Legacy, Protected Forever",
+  description: "Securely preserve your confidential documents, memories, final wishes, and digital assets for trusted loved ones to access under your chosen legacy policies.",
+  icon: 'ShieldCheck',
+  category: 'SECURITY',
+  url: 'https://legacy-vault-delta.vercel.app/',
+  color: 'bg-retro-purple',
+  stickers: ['COMING SOON']
 }
 ];
 
