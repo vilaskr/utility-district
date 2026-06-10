@@ -65,7 +65,18 @@ export const APPS: AppUtility[] = [
     url: 'https://minitrip.vercel.app/',
     color: 'bg-retro-yellow',
     stickers: ['BETA']
-  }
+  },
+  {
+  id: 'humanlibrary',
+  name: 'HUMAN LIBRARY',
+  tagline: "Every Stranger Has a Story",
+  description: "Read real people's stories, share your journey, and connect through authentic human experiences.",
+  icon: 'BookOpen',
+  category: 'SOCIAL',
+  url: 'https://human-library-three.vercel.app/',
+  color: 'bg-retro-blue',
+  stickers: ['NEW','BETA']
+}
 ];
 
 export const SOCIALS = {
