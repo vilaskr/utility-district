@@ -58,17 +58,5 @@ service cloud.firestore {
       allow get: if true;
       allow write: if isOwner(userId);
     }
-
-    // Presence Collection (Active users)
-    match /presence/{sessionId} {
-      allow read: if true;
-      allow write: if isValidId(sessionId);
-    }
-
-    // View Count Collection
-    match /view_count/{docId} {
-      allow read: if true;
-      allow write: if docId == 'total';
-    }
   }
 }
