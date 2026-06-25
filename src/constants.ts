@@ -87,6 +87,28 @@ export const APPS: AppUtility[] = [
   url: 'https://legacy-vault-delta.vercel.app/',
   color: 'bg-retro-purple',
   stickers: ['COMING SOON']
+},
+{
+  id: 'cipher-drop',
+  name: 'Cipher Drop',
+  tagline: 'Encrypt. Share. Decode.',
+  description: 'Securely encode and decode secret messages with an elegant cipher tool built for privacy and fun.',
+  icon: 'Shield',
+  category: 'UTILITY',
+  url: 'https://cipher-drop-alpha.vercel.app/',
+  color: 'bg-retro-purple',
+  stickers: ['NEW', 'SECURE']
+},
+{
+  id: 'frame-crop',
+  name: 'Frame Crop',
+  tagline: 'Crop Once. Post Everywhere.',
+  description: 'Instantly crop any image for Instagram, YouTube, X, LinkedIn, Facebook, and more with perfectly optimized presets.',
+  icon: 'Crop',
+  category: 'CREATOR',
+  url: 'https://frame-crop.vercel.app/',
+  color: 'bg-retro-orange',
+  stickers: ['NEW', 'CREATORS']
 }
 ];
 
