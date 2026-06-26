@@ -109,6 +109,17 @@ export const APPS: AppUtility[] = [
   url: 'https://frame-crop.vercel.app/',
   color: 'bg-retro-orange',
   stickers: ['NEW', 'CREATORS']
+},
+{
+  id: 'compresskit',
+  name: 'CompressKit',
+  tagline: 'Compress. Save. Share.',
+  description: 'Compress images and PDFs instantly in your browser. Fast, private, offline, and no uploads required.',
+  icon: 'Archive',
+  category: 'UTILITY',
+  url: 'https://compresskit-alpha.vercel.app/',
+  color: 'bg-retro-green',
+  stickers: ['NEW', 'OFFLINE']
 }
 ];
 
