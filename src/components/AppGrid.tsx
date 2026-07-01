@@ -4,6 +4,8 @@ import * as Icons from 'lucide-react';
 import { APPS, AppUtility } from '../constants';
 
 export default function AppGrid() {
+  const utilityApps = APPS.filter(app => app.category !== 'CREATIVE');
+
   return (
     <section id="apps" className="py-24 px-6 bg-white border-y-4 border-retro-black relative">
       {/* Decorative background grid */}
@@ -16,12 +18,12 @@ export default function AppGrid() {
             <p className="text-xl opacity-70">Browse the latest utility drops from the ecosystem.</p>
           </div>
           <div className="retro-card bg-retro-beige px-6 py-3 font-bold">
-            TOTAL APPS: {APPS.length}
+            TOTAL APPS: {utilityApps.length}
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {APPS.map((app, index) => (
+          {utilityApps.map((app, index) => (
             <AppCard key={app.id} app={app} index={index} />
           ))}
         </div>

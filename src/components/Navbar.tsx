@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutGrid, Info, Github, Home, Users } from 'lucide-react';
+import { LayoutGrid, Info, Github, Home, Sparkles } from 'lucide-react';
 import { SOCIALS } from '../constants';
 
 export default function Navbar() {
@@ -23,7 +23,7 @@ export default function Navbar() {
 
         <div className="flex items-center gap-4 md:gap-6">
           <NavLink icon={<Home size={18} />} label="Home" href="/" active={location.pathname === '/'} />
-          <NavLink icon={<Users size={18} />} label="Community" href="/community" active={location.pathname === '/community'} />
+          <NavLink icon={<Sparkles size={18} />} label="Creative" href="/creative" active={location.pathname === '/creative'} />
           <NavLink icon={<LayoutGrid size={18} />} label="Apps" href="/#apps" active={location.hash === '#apps'} />
           <NavLink icon={<Info size={18} />} label="About" href="/#about" active={location.hash === '#about'} />
           <a 

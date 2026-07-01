@@ -11,6 +11,8 @@
   --color-retro-red: #EF4444;
   --color-retro-yellow: #FDE047;
   --color-retro-green: #22C55E;
+  --color-retro-purple: #8B5CF6;
+  --color-retro-orange: #F97316;
 }
 
 @layer base {

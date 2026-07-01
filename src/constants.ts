@@ -120,6 +120,28 @@ export const APPS: AppUtility[] = [
   url: 'https://compresskit-alpha.vercel.app/',
   color: 'bg-retro-green',
   stickers: ['NEW', 'OFFLINE']
+},
+{
+  id: 'linkscope',
+  name: 'LinkScope',
+  tagline: 'Inspect. Preview. Optimize.',
+  description: 'Analyze SEO metadata, Open Graph tags, Twitter Cards, favicons, and social previews for any public website.',
+  icon: 'Globe',
+  category: 'DEVELOPER',
+  url: 'https://linkscope-alpha.vercel.app/', // Replace with your deployed URL
+  color: 'bg-retro-purple',
+  stickers: ['NEW', 'SEO']
+},
+{
+  id: 'generative-choreographer',
+  name: 'GenChoreographer',
+  tagline: 'Physics dances to your audio.',
+  description: 'An interactive audio-visual physics engine mapping real-time sound frequencies to gravitational particle choreographies.',
+  icon: 'Orbit',
+  category: 'CREATIVE',
+  url: 'https://dist-pi-drab-16.vercel.app/',
+  color: 'bg-retro-purple',
+  stickers: ['PHYSICS', 'AUDIO']
 }
 ];
 

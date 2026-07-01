@@ -9,7 +9,7 @@ import { isConfigured } from './lib/firebase';
 
 // Pages
 import HomePage from './pages/HomePage';
-import CommunityHub from './pages/CommunityHub';
+import CreativeApps from './pages/CreativeApps';
 import SubmitTool from './pages/SubmitTool';
 import CreatorProfile from './pages/CreatorProfile';
 
@@ -78,7 +78,7 @@ export default function App() {
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/community" element={<CommunityHub />} />
+              <Route path="/creative" element={<CreativeApps />} />
               <Route path="/submit" element={<SubmitTool />} />
               <Route path="/creator/:id" element={<CreatorProfile />} />
             </Routes>
