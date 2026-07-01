@@ -139,7 +139,7 @@ export const APPS: AppUtility[] = [
   description: 'An interactive audio-visual physics engine mapping real-time sound frequencies to gravitational particle choreographies.',
   icon: 'Orbit',
   category: 'CREATIVE',
-  url: 'https://dist-pi-drab-16.vercel.app/',
+  url: 'https://generative-choreographer.vercel.app/',
   color: 'bg-retro-purple',
   stickers: ['PHYSICS', 'AUDIO']
 }
