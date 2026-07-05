@@ -142,6 +142,17 @@ export const APPS: AppUtility[] = [
   url: 'https://generative-choreographer.vercel.app/',
   color: 'bg-retro-purple',
   stickers: ['PHYSICS', 'AUDIO']
+},
+{
+  id: 'chromatune',
+  name: 'ChromaTune',
+  tagline: 'Turn sound into color.',
+  description: 'An AI-free audio analysis tool that transforms music into unique color palettes, gradients, wallpapers, posters, and visual audio fingerprints using the Web Audio API. Use this app just to give a try. Complete version will be released soon.',
+  icon: 'Palette',
+  category: 'CREATIVE',
+  url: 'https://chromatune.vercel.app/',
+  color: 'bg-retro-pink',
+  stickers: ['AUDIO', 'COLOR','STILL DEVELOPING']
 }
 ];
 

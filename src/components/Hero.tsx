@@ -43,7 +43,7 @@ export default function Hero() {
           transition={{ delay: 0.3 }}
           className="text-xl md:text-2xl font-medium max-w-2xl mb-12 opacity-80"
         >
-          A collection of retro-styled internet utilities built independently by <span className="underline decoration-4 decoration-retro-yellow underline-offset-4 font-bold">Vilas K R</span>. 
+          A collection of internet utilities built independently by <span className="underline decoration-4 decoration-retro-yellow underline-offset-4 font-bold">Vilas K R</span>. 
           Useful apps, zero fluff.
         </motion.p>
 
